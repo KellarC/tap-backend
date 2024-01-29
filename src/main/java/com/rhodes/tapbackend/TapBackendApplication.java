@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TapBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TapBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TapBackendApplication.class, args);
+    }
 
 }
