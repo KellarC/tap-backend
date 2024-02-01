@@ -3,7 +3,7 @@ package com.rhodes.tapbackend.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="accounts")
+@Table(name="Accounts")
 public class Account {
 
     @Id
@@ -14,7 +14,7 @@ public class Account {
     @Column(name="username")
     private String username;
 
-    @Column(name="password")
+    @Column(name="encoded_password")
     private String password;
 
     @Column(name="email")
@@ -67,7 +67,7 @@ public class Account {
         return "Account{" +
                 "account_id=" + account_id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", encoded_password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

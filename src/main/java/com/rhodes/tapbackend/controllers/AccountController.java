@@ -21,8 +21,14 @@ public class AccountController {
     @GetMapping("/{account_id}")
     public Optional<Account> getAccountById(@PathVariable("account_id") Long account_id) { return accountService.getAccountById(account_id); }
 
+    /*@GetMapping("/{username}&{password}")
+    public Optional<Account> signIn(@PathVariable("username") String username, @PathVariable("password") String plaintext_password) { return AccountService.signIn(username, plaintext_password); }*/
+
     @PostMapping
     public Account postAccount(@RequestBody Account account) { return accountService.postAccount(account); }
+
+    /*@PostMapping
+    public Account signUp(@RequestBody Account account) { return accountService.signUp(account); }*/
 
     @PutMapping
     public Account updateAccount(@RequestBody Account account) { return accountService.updateAccount(account); }
