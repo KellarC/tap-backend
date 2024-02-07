@@ -1,7 +1,5 @@
 package com.rhodes.tapbackend.models;
 
-import com.rhodes.tapbackend.Application;
-
 public class LoginResponseDTO {
 
     private ApplicationUser user;
