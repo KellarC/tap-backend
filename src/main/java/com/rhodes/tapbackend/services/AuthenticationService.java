@@ -1,12 +1,14 @@
 package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.ApplicationUser;
+import com.rhodes.tapbackend.models.DummyResponseDTO;
 import com.rhodes.tapbackend.models.LoginResponseDTO;
 import com.rhodes.tapbackend.models.Role;
 import com.rhodes.tapbackend.repositories.RoleRepository;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -56,5 +58,17 @@ public class AuthenticationService {
         } catch(AuthenticationException e) {
             return new LoginResponseDTO(null, "");
         }
+    }
+
+    public ResponseEntity<?> debugRegister(String username, String password) {
+        DummyResponseDTO dummyResponse = new DummyResponseDTO();
+        dummyResponse.setMessage("Registration successful in debug mode.");
+        return ResponseEntity.ok(dummyResponse);
+    }
+
+    public ResponseEntity<?> debugLogin(String username, String password) {
+        DummyResponseDTO dummyResponse = new DummyResponseDTO();
+        dummyResponse.setMessage("Login successful in debug mode.");
+        return ResponseEntity.ok(dummyResponse);
     }
 }
