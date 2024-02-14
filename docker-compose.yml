@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '8081:8080'
+      - '443:443'
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://tap-db-instance.cv4k0ue6sald.us-east-2.rds.amazonaws.com:5432/
       - SPRING_DATASOURCE_USERNAME=postgres
