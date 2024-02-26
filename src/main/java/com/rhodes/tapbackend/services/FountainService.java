@@ -13,9 +13,8 @@ public class FountainService {
     @Autowired
     private FountainRespository fountainRespository;
 
+    // id, rating, and verified attributes set manually for new fountains
     public Fountain addFountain(float xCoord, float yCoord, String description, String author) {
         return fountainRespository.save(new Fountain(0, xCoord, yCoord, description, 0, false, author));
     }
-
-
 }
