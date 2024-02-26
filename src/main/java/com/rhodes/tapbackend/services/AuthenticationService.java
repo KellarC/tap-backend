@@ -60,7 +60,7 @@ public class AuthenticationService {
             return failedLoginInvalidPassword();
         }
     }
-    @ResponseStatus(code=HttpStatus.UNAUTHORIZED, reason="Invalid password")
+    @ResponseStatus(code=HttpStatus.UNAUTHORIZED, reason="Invalid username or password")
     private LoginResponseDTO failedLoginInvalidPassword() {
         return new LoginResponseDTO(null, "");
     }
