@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
     }
 
-    public void changeUsername (String oldUsername, String newUsername){
+    public void changeUsername(String oldUsername, String newUsername) {
         User user = userRepository.findByUsername(oldUsername)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
@@ -40,4 +40,5 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(encoder.encode(newPassword));
         userRepository.save(user);
+    }
 }
