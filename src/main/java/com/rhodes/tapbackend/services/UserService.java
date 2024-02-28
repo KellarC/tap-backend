@@ -1,5 +1,6 @@
 package com.rhodes.tapbackend.services;
 
+#import com.rhodes.tapbackend.models.User;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,4 +25,19 @@ public class UserService implements UserDetailsService {
 
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
     }
+
+    public void changeUsername (String oldUsername, String newUsername){
+        User user = userRepository.findByUsername(oldUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setUsername(newUsername);
+        userRepository.save(user);
+    }
+
+    public void changePassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
 }
