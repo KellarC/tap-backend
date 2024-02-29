@@ -1,7 +1,10 @@
 package com.rhodes.tapbackend.controllers;
 
+import com.rhodes.tapbackend.models.ApplicationUser;
 import com.rhodes.tapbackend.models.ChangeUsernameDTO;
 import com.rhodes.tapbackend.models.ChangePasswordDTO;
+import com.rhodes.tapbackend.models.ChangeEmailDTO;
+import com.rhodes.tapbackend.repositories.UserRepository;
 import com.rhodes.tapbackend.services.AuthenticationService;
 import org.springframework.web.bind.annotation.*;
 import com.rhodes.tapbackend.services.UserService;
@@ -21,6 +24,12 @@ public class UserController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ApplicationUser applicationUser;
 
     @GetMapping("/")
     public String helloUserController() { return "User access level"; }
@@ -49,6 +58,11 @@ public class UserController {
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO credentials) {
         authenticationService.changePassword(credentials.getUsername(), credentials.getNewPassword());
         return ResponseEntity.ok("Password changed successfully");
+    }
+
+    public ResponseEntity<?> changeEmail(@RequestBody ChangeEmailDTO changeEmailDTO) {
+        authenticationService.changeEmail(changeEmailDTO.getUsername(), changeEmailDTO.getNewEmail());
+        return ResponseEntity.ok("Email changed successfully");
     }
 
 }

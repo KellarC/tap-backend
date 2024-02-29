@@ -92,4 +92,12 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+
+    public void changeEmail(String username, String newEmail) {
+        ApplicationUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
 }
