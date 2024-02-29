@@ -43,9 +43,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
                     auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/fountain/**").permitAll(); //change security config for production
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/fountain/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 });
         http
