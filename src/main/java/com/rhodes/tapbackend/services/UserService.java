@@ -41,4 +41,12 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(newPassword));
         userRepository.save(user);
     }
+    //need to find UsernameNotFoundException but for Email!!
+    /*public void changeEmail(String email, String newEmail){
+        ApplicationUser user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EmailNotFoundException("User not found"));
+
+        user.setEmail(encoder.encode(newEmail));
+        userRepository.save(user);
+    }*/
 }

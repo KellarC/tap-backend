@@ -1,7 +1,9 @@
 package com.rhodes.tapbackend.controllers;
 
+import com.rhodes.tapbackend.services.AuthenticationService;
 import org.springframework.web.bind.annotation.*;
 import com.rhodes.tapbackend.services.UserService;
+import com.rhodes.tapbackend.models.ChangeCredentialsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -16,18 +18,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @GetMapping("/")
     public String helloUserController() { return "User access level"; }
 
+    /*
     @PostMapping("/{oldUsername}/change-username")
     public ResponseEntity<?> changeUsername(@PathVariable String oldUsername, @RequestParam String newUsername) {
         userService.changeUsername(oldUsername, newUsername);
         return ResponseEntity.ok("Username changed successfully");
     }
 
+
     @PostMapping("/{username}/change-password")
     public ResponseEntity<?> changePassword(@PathVariable String username, @RequestParam String newPassword) {
         userService.changePassword(username, newPassword);
+        return ResponseEntity.ok("Password changed successfully");
+    }*/
+    public ResponseEntity<?> changeUsername(@RequestBody ChangeCredentialsDTO credentials) {
+        authenticationService.changeUsername(credentials.getUsername(), credentials.getNewPassword());
+        return ResponseEntity.ok("Username changed successfully");
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangeCredentialsDTO credentials) {
+        authenticationService.changePassword(credentials.getUsername(), credentials.getNewPassword());
         return ResponseEntity.ok("Password changed successfully");
     }
 
