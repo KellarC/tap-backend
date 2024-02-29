@@ -1,13 +1,13 @@
-/*package com.rhodes.tapbackend.models;
+package com.rhodes.tapbackend.models;
 
-public class ChangeCredentialsDTO {
+public class ChangePasswordDTO {
     private String username;
     private String newPassword;
 
-    public ChangeCredentialsDTO() {
+    public ChangePasswordDTO() {
     }
 
-    public ChangeCredentialsDTO(String username, String newPassword) {
+    public ChangePasswordDTO(String username, String newPassword) {
         this.username = username;
         this.newPassword = newPassword;
     }
@@ -27,4 +27,4 @@ public class ChangeCredentialsDTO {
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
-}*/
+}
