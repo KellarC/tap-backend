@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FountainRespository extends JpaRepository<Fountain, Integer> {
+public interface FountainRepository extends JpaRepository<Fountain, Integer> {
 
 }

@@ -5,14 +5,16 @@ public class FountainDTO {
     private float xCoord;
     private float yCoord;
     private String description;
+    private float rating;
     private String author;
 
     public FountainDTO() { super(); }
 
-    public FountainDTO(float xCoord, float yCoord, String description, String author) {
+    public FountainDTO(float xCoord, float yCoord, String description, float rating, String author) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.description = description;
+        this.rating = rating;
         this.author = author;
     }
 
@@ -38,6 +40,14 @@ public class FountainDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public String getAuthor() {

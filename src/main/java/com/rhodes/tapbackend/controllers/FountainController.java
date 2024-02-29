@@ -19,6 +19,7 @@ public class FountainController {
         return fountainService.addFountain(body.getxCoord(),
                 body.getyCoord(),
                 body.getDescription(),
+                body.getRating(),
                 body.getAuthor());
     }
 }
