@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.rhodes.tapbackend.models.ApplicationUser;
+import com.rhodes.tapbackend.models.User;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -27,18 +27,18 @@ public class UserService implements UserDetailsService {
     }
 
     public void changeUsername(String oldUsername, String newUsername) {
-        ApplicationUser user = userRepository.findByUsername(oldUsername)
+        User user = userRepository.findByUsername(oldUsername)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        user.setUsername(newUsername);
+        user.setUsername(newUsername); //setUsername is suppose to be under "user" class
         userRepository.save(user);
     }
 
     public void changePassword(String username, String newPassword) {
-        ApplicationUser user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        user.setPassword(encoder.encode(newPassword));
+        user.setPassword(encoder.encode(newPassword)); //setPassword is suppose to be under "user" class
         userRepository.save(user);
     }
 }
