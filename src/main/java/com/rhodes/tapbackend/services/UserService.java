@@ -13,7 +13,7 @@ import com.rhodes.tapbackend.models.ApplicationUser;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private PasswordEncoder encoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -38,15 +38,15 @@ public class UserService implements UserDetailsService {
         ApplicationUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        user.setPassword(encoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
-    //need to find UsernameNotFoundException but for Email!!
-    /*public void changeEmail(String email, String newEmail){
-        ApplicationUser user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EmailNotFoundException("User not found"));
 
-        user.setEmail(encoder.encode(newEmail));
+    public void changeEmail(String username, String newEmail) {
+        ApplicationUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setEmail(newEmail);
         userRepository.save(user);
-    }*/
+    }
 }

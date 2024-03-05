@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -76,28 +75,5 @@ public class AuthenticationService {
         DummyResponseDTO dummyResponse = new DummyResponseDTO();
         dummyResponse.setMessage("Login successful in debug mode.");
         return ResponseEntity.ok(dummyResponse);
-    }
-    public void changeUsername(String oldUsername, String newUsername) {
-        ApplicationUser user = userRepository.findByUsername(oldUsername)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        user.setUsername(newUsername);
-        userRepository.save(user);
-    }
-
-    public void changePassword(String username, String newPassword) {
-        ApplicationUser user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-    }
-
-    public void changeEmail(String username, String newEmail) {
-        ApplicationUser user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        user.setEmail(newEmail);
-        userRepository.save(user);
     }
 }
