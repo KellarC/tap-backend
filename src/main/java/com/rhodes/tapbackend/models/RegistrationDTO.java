@@ -3,7 +3,6 @@ package com.rhodes.tapbackend.models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class RegistrationDTO {
     private String username;
     private String password;

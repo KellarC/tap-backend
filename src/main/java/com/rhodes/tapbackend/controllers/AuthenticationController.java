@@ -5,7 +5,6 @@ import com.rhodes.tapbackend.models.LoginResponseDTO;
 import com.rhodes.tapbackend.models.RegistrationDTO;
 import com.rhodes.tapbackend.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
