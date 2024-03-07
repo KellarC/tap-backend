@@ -3,7 +3,9 @@ package com.rhodes.tapbackend.controllers;
 import com.rhodes.tapbackend.models.ChangeUsernameDTO;
 import com.rhodes.tapbackend.models.ChangePasswordDTO;
 import com.rhodes.tapbackend.models.ChangeEmailDTO;
+import com.rhodes.tapbackend.models.DeleteAccountDTO;
 import com.rhodes.tapbackend.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +37,13 @@ public class UserController {
     public ResponseEntity<?> changeEmail(@RequestBody ChangeEmailDTO changeEmailDTO) {
         userService.changeEmail(changeEmailDTO.getUsername(), changeEmailDTO.getNewEmail());
         return ResponseEntity.ok("Email changed successfully");
+    }
+    public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountDTO credentials) {
+        boolean deleted = userService.deleteAccount(credentials.getUsername());
+        if (deleted) {
+            return ResponseEntity.ok("Account deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 }
