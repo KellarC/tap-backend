@@ -3,6 +3,7 @@ package com.rhodes.tapbackend.controllers;
 import com.rhodes.tapbackend.models.ChangeUsernameDTO;
 import com.rhodes.tapbackend.models.ChangePasswordDTO;
 import com.rhodes.tapbackend.models.ChangeEmailDTO;
+import com.rhodes.tapbackend.models.ForgotPasswordDTO;
 import com.rhodes.tapbackend.models.DeleteAccountDTO;
 import com.rhodes.tapbackend.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -46,4 +47,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) {
+        boolean result = userService.forgotPassword(forgotPasswordDTO.getUsername());
+        if (result) {
+            return ResponseEntity.ok("A password reset link has been sent to your email.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 }

@@ -56,4 +56,15 @@ public class UserService implements UserDetailsService {
             return false; // user not found
         }
     }
+    public boolean forgotPassword(String username) {
+        ApplicationUser user = userRepository.findByUsername(username)
+                .orElse(null); // null = does not exist
+
+        if (user != null) {
+            // what do we want the logic to be here?
+            return true; // link is sent
+        } else {
+            return false; // user not found
+        }
+    }
 }
