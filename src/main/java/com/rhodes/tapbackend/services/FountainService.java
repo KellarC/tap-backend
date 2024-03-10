@@ -17,4 +17,16 @@ public class FountainService {
     public Fountain addFountain(float xCoord, float yCoord, String description, float rating, String author) {
         return fountainRepository.save(new Fountain(0, xCoord, yCoord, description, rating, false, author));
     }
+
+    //credit to Darya for code structure from deleteAccount method
+    public boolean deleteFountain(Integer fountainId) {
+        Fountain fountain = fountainRepository.findById(fountainId)
+                .orElse(null);
+        if (fountain != null) {
+            fountainRepository.delete(fountain);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
