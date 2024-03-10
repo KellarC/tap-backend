@@ -22,14 +22,14 @@ public class UserController {
     public String helloUserController() { return "User access level"; }
 
     @PostMapping("/change-username")
-    public ResponseEntity<?> changeUsername(@RequestBody ChangeUsernameDTO credentials) {
-        userService.changeUsername(credentials.getOldUsername(), credentials.getNewUsername());
+    public ResponseEntity<?> changeUsername(@RequestBody ChangeUsernameDTO changeUsernameDTO) {
+        userService.changeUsername(changeUsernameDTO.getOldUsername(), changeUsernameDTO.getNewUsername());
         return ResponseEntity.ok("Username changed successfully");
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO credentials) {
-        userService.changePassword(credentials.getUsername(), credentials.getNewPassword());
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        userService.changePassword(changePasswordDTO.getUsername(), changePasswordDTO.getNewPassword());
         return ResponseEntity.ok("Password changed successfully");
     }
 
@@ -38,8 +38,10 @@ public class UserController {
         userService.changeEmail(changeEmailDTO.getUsername(), changeEmailDTO.getNewEmail());
         return ResponseEntity.ok("Email changed successfully");
     }
-    public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountDTO credentials) {
-        boolean deleted = userService.deleteAccount(credentials.getUsername());
+
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountDTO deleteAccountDTO) {
+        boolean deleted = userService.deleteAccount(deleteAccountDTO.getUsername());
         if (deleted) {
             return ResponseEntity.ok("Account deleted successfully");
         } else {
