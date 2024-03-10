@@ -46,4 +46,14 @@ public class UserService implements UserDetailsService {
         user.setEmail(newEmail);
         userRepository.save(user);
     }
+    public boolean deleteAccount(String username) {
+        ApplicationUser user = userRepository.findByUsername(username)
+                .orElse(null); // null = does not exist
+        if (user != null) {
+            userRepository.delete(user);
+            return true; // deleted
+        } else {
+            return false; // user not found
+        }
+    }
 }
