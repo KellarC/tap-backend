@@ -52,6 +52,7 @@ public class ApplicationUser implements UserDetails {
         this.authorities = authorities;
     }
 
+    // constructor for ADMIN
     public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
         this.userId = userId;
         this.username = username;
