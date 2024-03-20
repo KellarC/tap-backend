@@ -31,9 +31,9 @@ public class FountainController {
     public ResponseEntity<?> deleteFountain(@RequestBody DeleteFountainDTO deleteFountainDTO) {
         boolean deleted = fountainService.deleteFountain(deleteFountainDTO.getFountainId());
         if (deleted) {
-            return ResponseEntity.ok("Fountain deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).build();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }

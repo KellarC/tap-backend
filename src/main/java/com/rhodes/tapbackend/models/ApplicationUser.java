@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List; //added
 import java.util.Set;
 
 @Entity
@@ -52,6 +53,7 @@ public class ApplicationUser implements UserDetails {
         this.authorities = authorities;
     }
 
+    // constructor for ADMIN
     public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
         this.userId = userId;
         this.username = username;
@@ -102,3 +104,6 @@ public class ApplicationUser implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
+
+
+
