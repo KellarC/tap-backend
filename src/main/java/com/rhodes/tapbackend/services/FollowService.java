@@ -15,6 +15,10 @@ public class FollowService {
     private FollowRepository followRepository;
 
     public Follow follow(ApplicationUser follower, ApplicationUser followee) {
-        return followRepository.save(new Follow(0, follower, followee));
+        return followRepository.save(new Follow(follower, followee));
+    }
+
+    public void unfollow(ApplicationUser follower, ApplicationUser followee) {
+        followRepository.deleteByFollowerAndFollowee(follower, followee);
     }
 }

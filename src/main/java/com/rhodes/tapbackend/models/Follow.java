@@ -19,16 +19,10 @@ public class Follow {
     @JoinColumn(name = "followee_id", referencedColumnName = "user_id")
     private ApplicationUser followee;
 
-    public Follow(Integer id, ApplicationUser follower, ApplicationUser followee) {
-        super();
-        this.id = id;
+    public Follow(ApplicationUser follower, ApplicationUser followee) {
         this.follower = follower;
         this.followee = followee;
     }
-
-    public Follow() {
-    }
-
     public Integer getId() {
         return id;
     }

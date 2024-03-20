@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List; //added
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,16 @@ public class ApplicationUser implements UserDetails {
             inverseJoinColumns={@JoinColumn(name="role_id")}
     )
     private Set<Role> authorities;
+
+    @ElementCollection
+    @CollectionTable(name = "followers", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "follower_username")
+    private List<String> followers;
+
+    @ElementCollection
+    @CollectionTable(name = "following", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "following_username")
+    private List<String> following;
 
     public ApplicationUser() {
         super();
@@ -102,4 +113,19 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
+
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
 }
+
+
+
