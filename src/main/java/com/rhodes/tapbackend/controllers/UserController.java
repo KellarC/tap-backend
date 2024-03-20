@@ -24,28 +24,28 @@ public class UserController {
     @PostMapping("/change-username")
     public ResponseEntity<?> changeUsername(@RequestBody ChangeUsernameDTO changeUsernameDTO) {
         userService.changeUsername(changeUsernameDTO.getOldUsername(), changeUsernameDTO.getNewUsername());
-        return ResponseEntity.ok("Username changed successfully");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
         userService.changePassword(changePasswordDTO.getUsername(), changePasswordDTO.getNewPassword());
-        return ResponseEntity.ok("Password changed successfully");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/change-email")
     public ResponseEntity<?> changeEmail(@RequestBody ChangeEmailDTO changeEmailDTO) {
         userService.changeEmail(changeEmailDTO.getUsername(), changeEmailDTO.getNewEmail());
-        return ResponseEntity.ok("Email changed successfully");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/delete-account")
     public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountDTO deleteAccountDTO) {
         boolean deleted = userService.deleteAccount(deleteAccountDTO.getUsername());
         if (deleted) {
-            return ResponseEntity.ok("Account deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).build();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
