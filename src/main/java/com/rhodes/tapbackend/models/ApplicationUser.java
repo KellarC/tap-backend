@@ -37,6 +37,15 @@ public class ApplicationUser implements UserDetails {
     )
     private Set<Role> authorities;
 
+    @ElementCollection
+    @CollectionTable(name = "followers", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "follower_username")
+    private List<String> followers;
+
+    @ElementCollection
+    @CollectionTable(name = "following", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "following_username")
+    private List<String> following;
     public ApplicationUser() {
         super();
         this.authorities = new HashSet<Role>();
@@ -103,6 +112,14 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
+
+    public List<String> getFollowers() { return followers; }
+
+    public void setFollowers(List<String> followers) { this.followers = followers; }
+
+    public List<String> getFollowing() { return following; }
+
+    public void setFollowing(List<String> following) { this.following = following; }
 }
 
 
