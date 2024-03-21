@@ -1,9 +1,6 @@
 package com.rhodes.tapbackend.controllers;
 
-import com.rhodes.tapbackend.models.ChangeUsernameDTO;
-import com.rhodes.tapbackend.models.ChangePasswordDTO;
-import com.rhodes.tapbackend.models.ChangeEmailDTO;
-import com.rhodes.tapbackend.models.DeleteAccountDTO;
+import com.rhodes.tapbackend.models.*;
 import com.rhodes.tapbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +44,11 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PostMapping("/follow-user")
+    public ResponseEntity<?> followUser(@RequestBody FollowUserDTO followUserDTO) {
+        userService.followUser(followUserDTO.getFollower_id(), followUserDTO.getFollowee_id());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
