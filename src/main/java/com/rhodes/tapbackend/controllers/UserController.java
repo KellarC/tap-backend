@@ -62,4 +62,9 @@ public class UserController {
     public List<String> viewFollowers(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
         return userService.viewFollowers(viewFollowersFollowingDTO.getUser_id());
     }
+
+    @GetMapping("/view-following")
+    public List<String> viewFollowing(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
+        return userService.viewFollowing(viewFollowersFollowingDTO.getUser_id());
+    }
 }

@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,9 +67,11 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean followUser(Integer followerId, Integer followeeId) {
+        if (followerRepository.findExistingFollow(followerId, followeeId).isPresent()) {
+            return false;
+        }
         Optional<ApplicationUser> optionalFollower = userRepository.findById(followerId);
         Optional<ApplicationUser> optionalFollowee = userRepository.findById(followeeId);
-
         if (!(optionalFollower.isPresent() || optionalFollowee.isPresent())) {
             return false;
         } else {
@@ -85,11 +85,24 @@ public class UserService implements UserDetailsService {
     public List<String> viewFollowers(Integer user_id) {
         Optional<ApplicationUser> user;
         List<String> followers = new ArrayList<>();
+
         List<Integer> followerIds = followerRepository.findFollowers(user_id);
         for (Integer followerId : followerIds) {
             user = userRepository.findById(followerId);
             followers.add(user.get().getUsername());
         }
         return followers;
+    }
+
+    public List<String> viewFollowing(Integer user_id) {
+        Optional<ApplicationUser> user;
+        List<String> following = new ArrayList<>();
+
+        List<Integer> followingIds = followerRepository.findFollowing(user_id);
+        for (Integer followingId : followingIds) {
+            user = userRepository.findById(followingId);
+            following.add(user.get().getUsername());
+        }
+        return following;
     }
 }
