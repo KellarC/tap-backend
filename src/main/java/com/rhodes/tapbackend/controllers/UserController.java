@@ -1,14 +1,12 @@
 package com.rhodes.tapbackend.controllers;
 
-import com.rhodes.tapbackend.models.ChangeUsernameDTO;
-import com.rhodes.tapbackend.models.ChangePasswordDTO;
-import com.rhodes.tapbackend.models.ChangeEmailDTO;
-import com.rhodes.tapbackend.models.DeleteAccountDTO;
+import com.rhodes.tapbackend.models.*;
 import com.rhodes.tapbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -17,9 +15,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/")
-    public String helloUserController() { return "User access level"; }
 
     @PostMapping("/change-username")
     public ResponseEntity<?> changeUsername(@RequestBody ChangeUsernameDTO changeUsernameDTO) {
@@ -47,5 +42,25 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PostMapping("/follow-user")
+    public ResponseEntity<?> followUser(@RequestBody FollowUserDTO followUserDTO) {
+        boolean follow = userService.followUser(followUserDTO.getFollower(), followUserDTO.getFollowee());
+        if (follow) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/view-followers")
+    public List<String> viewFollowers(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
+        return userService.viewFollowers(viewFollowersFollowingDTO.getUsername());
+    }
+
+    @GetMapping("/view-following")
+    public List<String> viewFollowing(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
+        return userService.viewFollowing(viewFollowersFollowingDTO.getUsername());
     }
 }

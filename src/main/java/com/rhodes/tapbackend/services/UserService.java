@@ -1,6 +1,8 @@
 package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.ApplicationUser;
+import com.rhodes.tapbackend.models.Follower;
+import com.rhodes.tapbackend.repositories.FollowerRepository;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -17,6 +21,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FollowerRepository followerRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,6 +53,7 @@ public class UserService implements UserDetailsService {
         user.setEmail(newEmail);
         userRepository.save(user);
     }
+
     public boolean deleteAccount(String username) {
         ApplicationUser user = userRepository.findByUsername(username)
                 .orElse(null); // null = does not exist
@@ -55,5 +63,32 @@ public class UserService implements UserDetailsService {
         } else {
             return false; // user not found
         }
+    }
+
+    public boolean followUser(String follower_name, String followee_name) {
+        // prevent duplicates
+        if (followerRepository.findExistingFollow(follower_name, followee_name).isPresent()) {
+            return false;
+        }
+        // ensure both users exist
+        Optional<ApplicationUser> optionalFollower = userRepository.findByUsername(follower_name);
+        Optional<ApplicationUser> optionalFollowee = userRepository.findByUsername(followee_name);
+        if (!(optionalFollower.isPresent() || optionalFollowee.isPresent())) {
+            return false;
+        } else {
+            // extract users from optionals and save new row in table
+            ApplicationUser follower = optionalFollower.get();
+            ApplicationUser followee = optionalFollowee.get();
+            followerRepository.save(new Follower(0, follower, followee));
+            return true;
+        }
+    }
+
+    public List<String> viewFollowers(String username) {
+        return followerRepository.findFollowers(username);
+    }
+
+    public List<String> viewFollowing(String username) {
+        return followerRepository.findFollowing(username);
     }
 }
