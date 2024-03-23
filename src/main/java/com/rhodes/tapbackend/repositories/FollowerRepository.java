@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FollowerRepository extends JpaRepository<Follower, Integer> {
-    @Query(value="SELECT id FROM followers WHERE follower_id = :followerId AND followee_id = :followeeId", nativeQuery = true)
-    Optional<Integer> findExistingFollow(@Param("followerId") Integer followerId, @Param("followeeId") Integer followeeId);
+    @Query(value="SELECT id FROM followers WHERE follower = :follower AND followee = :followee", nativeQuery = true)
+    Optional<Integer> findExistingFollow(@Param("follower") String follower, @Param("followee") String followee);
 
-    @Query(value="SELECT follower_id FROM followers WHERE followee_id = :user_id", nativeQuery = true)
-    List<Integer> findFollowers(@Param("user_id") Integer user_id);
+    @Query(value="SELECT follower FROM followers WHERE followee = :username", nativeQuery = true)
+    List<String> findFollowers(@Param("username") String username);
 
-    @Query(value="SELECT followee_id FROM followers WHERE follower_id = :user_id", nativeQuery = true)
-    List<Integer> findFollowing(@Param("user_id") Integer user_id);
+    @Query(value="SELECT followee FROM followers WHERE follower = :username", nativeQuery = true)
+    List<String> findFollowing(@Param("username") String username);
 }

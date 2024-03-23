@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,15 +65,18 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public boolean followUser(Integer followerId, Integer followeeId) {
-        if (followerRepository.findExistingFollow(followerId, followeeId).isPresent()) {
+    public boolean followUser(String follower_name, String followee_name) {
+        // prevent duplicates
+        if (followerRepository.findExistingFollow(follower_name, followee_name).isPresent()) {
             return false;
         }
-        Optional<ApplicationUser> optionalFollower = userRepository.findById(followerId);
-        Optional<ApplicationUser> optionalFollowee = userRepository.findById(followeeId);
+        // ensure both users exist
+        Optional<ApplicationUser> optionalFollower = userRepository.findByUsername(follower_name);
+        Optional<ApplicationUser> optionalFollowee = userRepository.findByUsername(followee_name);
         if (!(optionalFollower.isPresent() || optionalFollowee.isPresent())) {
             return false;
         } else {
+            // extract users from optionals and save new row in table
             ApplicationUser follower = optionalFollower.get();
             ApplicationUser followee = optionalFollowee.get();
             followerRepository.save(new Follower(0, follower, followee));
@@ -82,27 +84,11 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public List<String> viewFollowers(Integer user_id) {
-        Optional<ApplicationUser> user;
-        List<String> followers = new ArrayList<>();
-
-        List<Integer> followerIds = followerRepository.findFollowers(user_id);
-        for (Integer followerId : followerIds) {
-            user = userRepository.findById(followerId);
-            followers.add(user.get().getUsername());
-        }
-        return followers;
+    public List<String> viewFollowers(String username) {
+        return followerRepository.findFollowers(username);
     }
 
-    public List<String> viewFollowing(Integer user_id) {
-        Optional<ApplicationUser> user;
-        List<String> following = new ArrayList<>();
-
-        List<Integer> followingIds = followerRepository.findFollowing(user_id);
-        for (Integer followingId : followingIds) {
-            user = userRepository.findById(followingId);
-            following.add(user.get().getUsername());
-        }
-        return following;
+    public List<String> viewFollowing(String username) {
+        return followerRepository.findFollowing(username);
     }
 }

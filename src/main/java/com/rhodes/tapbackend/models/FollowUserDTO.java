@@ -2,30 +2,30 @@ package com.rhodes.tapbackend.models;
 
 public class FollowUserDTO {
 
-    private Integer follower_id;
-    private Integer followee_id;
+    private String follower;
+    private String followee;
 
     public FollowUserDTO() {
     }
 
-    public FollowUserDTO(Integer follower_id, Integer followee_id) {
-        this.follower_id = follower_id;
-        this.followee_id = followee_id;
+    public FollowUserDTO(String follower, String followee) {
+        this.follower = follower;
+        this.followee = followee;
     }
 
-    public Integer getFollower_id() {
-        return follower_id;
+    public String getFollower() {
+        return follower;
     }
 
-    public void setFollower_id(Integer follower_id) {
-        this.follower_id = follower_id;
+    public void setFollower(String follower) {
+        this.follower = follower;
     }
 
-    public Integer getFollowee_id() {
-        return followee_id;
+    public String getFollowee() {
+        return followee;
     }
 
-    public void setFollowee_id(Integer followee_id) {
-        this.followee_id = followee_id;
+    public void setFollowee(String followee) {
+        this.followee = followee;
     }
 }

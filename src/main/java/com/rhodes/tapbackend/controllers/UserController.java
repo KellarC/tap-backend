@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 
 @RestController
@@ -16,9 +15,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/")
-    public String helloUserController() { return "User access level"; }
 
     @PostMapping("/change-username")
     public ResponseEntity<?> changeUsername(@RequestBody ChangeUsernameDTO changeUsernameDTO) {
@@ -50,7 +46,7 @@ public class UserController {
 
     @PostMapping("/follow-user")
     public ResponseEntity<?> followUser(@RequestBody FollowUserDTO followUserDTO) {
-        boolean follow = userService.followUser(followUserDTO.getFollower_id(), followUserDTO.getFollowee_id());
+        boolean follow = userService.followUser(followUserDTO.getFollower(), followUserDTO.getFollowee());
         if (follow) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
@@ -60,11 +56,11 @@ public class UserController {
 
     @GetMapping("/view-followers")
     public List<String> viewFollowers(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
-        return userService.viewFollowers(viewFollowersFollowingDTO.getUser_id());
+        return userService.viewFollowers(viewFollowersFollowingDTO.getUsername());
     }
 
     @GetMapping("/view-following")
     public List<String> viewFollowing(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
-        return userService.viewFollowing(viewFollowersFollowingDTO.getUser_id());
+        return userService.viewFollowing(viewFollowersFollowingDTO.getUsername());
     }
 }
