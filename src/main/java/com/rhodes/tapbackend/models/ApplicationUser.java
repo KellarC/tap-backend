@@ -37,12 +37,6 @@ public class ApplicationUser implements UserDetails {
     )
     private Set<Role> authorities;
 
-    @OneToMany(mappedBy="follower")
-    private Set<Follower> followers;
-
-    @OneToMany(mappedBy="followee")
-    private Set<Follower> following;
-
     /*@ElementCollection
     @CollectionTable(name = "followers", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "follower_username")
@@ -119,14 +113,6 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
-
-    public Set<Follower> getFollowers() { return followers; }
-
-    public void setFollowers(Set<Follower> followers) { this.followers = followers; }
-
-    public Set<Follower> getFollowing() { return following; }
-
-    public void setFollowing(Set<Follower> following) { this.following = following; }
 }
 
 

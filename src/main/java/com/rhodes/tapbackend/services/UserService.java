@@ -1,6 +1,7 @@
 package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.ApplicationUser;
+import com.rhodes.tapbackend.models.Follower;
 import com.rhodes.tapbackend.repositories.FollowerRepository;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -62,7 +65,17 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void followUser(Integer followerId, Integer followeeId) {
-        //followerRepository.save(new Follower(0, userRepository.findById(followerId), userRepository.findById(followeeId)));
+    public boolean followUser(Integer followerId, Integer followeeId) {
+        Optional<ApplicationUser> optionalFollower = userRepository.findById(followerId);
+        Optional<ApplicationUser> optionalFollowee = userRepository.findById(followeeId);
+
+        if (!(optionalFollower.isPresent() || optionalFollowee.isPresent())) {
+            return false;
+        } else {
+            ApplicationUser follower = optionalFollower.get();
+            ApplicationUser followee = optionalFollowee.get();
+            followerRepository.save(new Follower(0, follower, followee));
+            return true;
+        }
     }
 }

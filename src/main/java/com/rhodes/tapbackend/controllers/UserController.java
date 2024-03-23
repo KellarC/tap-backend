@@ -48,7 +48,11 @@ public class UserController {
 
     @PostMapping("/follow-user")
     public ResponseEntity<?> followUser(@RequestBody FollowUserDTO followUserDTO) {
-        userService.followUser(followUserDTO.getFollower_id(), followUserDTO.getFollowee_id());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        boolean follow = userService.followUser(followUserDTO.getFollower_id(), followUserDTO.getFollowee_id());
+        if (follow) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
