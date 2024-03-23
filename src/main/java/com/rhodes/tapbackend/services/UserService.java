@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,5 +80,16 @@ public class UserService implements UserDetailsService {
             followerRepository.save(new Follower(0, follower, followee));
             return true;
         }
+    }
+
+    public List<String> viewFollowers(Integer user_id) {
+        Optional<ApplicationUser> user;
+        List<String> followers = new ArrayList<>();
+        List<Integer> followerIds = followerRepository.findFollowers(user_id);
+        for (Integer followerId : followerIds) {
+            user = userRepository.findById(followerId);
+            followers.add(user.get().getUsername());
+        }
+        return followers;
     }
 }

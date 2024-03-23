@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin("*")
@@ -54,5 +56,10 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/view-followers")
+    public List<String> viewFollowers(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
+        return userService.viewFollowers(viewFollowersFollowingDTO.getUser_id());
     }
 }
