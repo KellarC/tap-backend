@@ -1,13 +1,13 @@
 package com.rhodes.tapbackend.controllers;
 
-import com.rhodes.tapbackend.models.DeleteFountainDTO;
-import com.rhodes.tapbackend.models.Fountain;
-import com.rhodes.tapbackend.models.FountainDTO;
+import com.rhodes.tapbackend.models.*;
 import com.rhodes.tapbackend.services.FountainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/fountain")
@@ -30,6 +30,36 @@ public class FountainController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteFountain(@RequestBody DeleteFountainDTO deleteFountainDTO) {
         boolean deleted = fountainService.deleteFountain(deleteFountainDTO.getFountainId());
+        if (deleted) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addFountainReview(@RequestBody FountainReviewDTO fountainReviewDTO) {
+        Optional<Fountain> fountain = fountainService.findFountain(fountainReviewDTO.getFountainId());
+        if (fountain.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            boolean exists = fountainService.userReviewExistsForFountain(fountainReviewDTO.getFountainId(), fountainReviewDTO.getReviewer());
+            if (exists) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                fountainService.addFountainReview(fountainReviewDTO.getFountainId(),
+                        fountainReviewDTO.getReviewer(),
+                        fountainReviewDTO.getDescription(),
+                        fountainReviewDTO.getRating());
+                fountainService.updateFountainRating(fountainReviewDTO.getFountainId(), fountainReviewDTO.getRating(), fountain.get());
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteFountainReview(@RequestBody DeleteFountainReviewDTO deleteFountainReviewDTO) {
+        boolean deleted = fountainService.deleteFountainReview(deleteFountainReviewDTO.getFountainId(), deleteFountainReviewDTO.getReviewer());
         if (deleted) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
