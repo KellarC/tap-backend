@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,7 @@ public class FountainService {
                 .orElse(null);
         if (fountain != null) {
             fountainRepository.delete(fountain);
+            fountainReviewRepository.deleteAllById(Collections.singleton(fountainId));
             return true;
         } else {
             return false;

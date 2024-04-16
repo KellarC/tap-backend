@@ -37,7 +37,7 @@ public class FountainController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/add-review")
     public ResponseEntity<?> addFountainReview(@RequestBody FountainReviewDTO fountainReviewDTO) {
         Optional<Fountain> fountain = fountainService.findFountain(fountainReviewDTO.getFountainId());
         if (fountain.isEmpty()) {
