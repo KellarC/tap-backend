@@ -84,6 +84,23 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public boolean unfollowUser(String follower_name, String followee_name) {
+        //confirm relationship exists
+        Optional<Integer> relationshipId = followerRepository.findExistingFollow(follower_name, followee_name);
+        if (relationshipId.isEmpty()) {
+            return false;
+        } else {
+            // ensure both users exist
+            Optional<ApplicationUser> optionalFollower = userRepository.findByUsername(follower_name);
+            Optional<ApplicationUser> optionalFollowee = userRepository.findByUsername(followee_name);
+            if (!(optionalFollower.isPresent() || optionalFollowee.isPresent())) {
+                return false;
+            }
+            followerRepository.deleteById(relationshipId.get());
+            return true;
+        }
+    }
+
     public List<String> viewFollowers(String username) {
         return followerRepository.findFollowers(username);
     }

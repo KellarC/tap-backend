@@ -45,9 +45,19 @@ public class UserController {
     }
 
     @PostMapping("/follow-user")
-    public ResponseEntity<?> followUser(@RequestBody FollowUserDTO followUserDTO) {
-        boolean follow = userService.followUser(followUserDTO.getFollower(), followUserDTO.getFollowee());
+    public ResponseEntity<?> followUser(@RequestBody FollowUnfollowUserDTO followUnfollowUserDTO) {
+        boolean follow = userService.followUser(followUnfollowUserDTO.getFollower(), followUnfollowUserDTO.getFollowee());
         if (follow) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/unfollow-user")
+    public ResponseEntity<?> unfollowUser(@RequestBody FollowUnfollowUserDTO followUnfollowUserDTO) {
+        boolean unfollow = userService.unfollowUser(followUnfollowUserDTO.getFollower(), followUnfollowUserDTO.getFollowee());
+        if (unfollow) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
