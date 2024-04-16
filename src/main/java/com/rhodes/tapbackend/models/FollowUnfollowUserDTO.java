@@ -1,14 +1,14 @@
 package com.rhodes.tapbackend.models;
 
-public class FollowUserDTO {
+public class FollowUnfollowUserDTO {
 
     private String follower;
     private String followee;
 
-    public FollowUserDTO() {
+    public FollowUnfollowUserDTO() {
     }
 
-    public FollowUserDTO(String follower, String followee) {
+    public FollowUnfollowUserDTO(String follower, String followee) {
         this.follower = follower;
         this.followee = followee;
     }
