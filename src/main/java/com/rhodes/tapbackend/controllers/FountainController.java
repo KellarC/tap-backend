@@ -56,14 +56,4 @@ public class FountainController {
             }
         }
     }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteFountainReview(@RequestBody DeleteFountainReviewDTO deleteFountainReviewDTO) {
-        boolean deleted = fountainService.deleteFountainReview(deleteFountainReviewDTO.getFountainId(), deleteFountainReviewDTO.getReviewer());
-        if (deleted) {
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
 }

@@ -59,15 +59,4 @@ public class FountainService {
         Optional<Integer> exists = fountainReviewRepository.getExistingReview(fountainId, user);
         return exists.isPresent();
     }
-
-    //credit to Darya for code structure from deleteAccount method
-    public boolean deleteFountainReview(Integer fountainId, String user) {
-        Optional<Integer> review = fountainReviewRepository.getExistingReview(fountainId, user);
-        if (review.isPresent()) {
-            fountainReviewRepository.deleteById(review.get());
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
