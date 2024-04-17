@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/fountain")
@@ -55,5 +56,14 @@ public class FountainController {
                 return ResponseEntity.status(HttpStatus.OK).build();
             }
         }
+    }
+
+    @GetMapping("/get-in-area")
+    public List<Fountain> getFountainsInArea(@RequestBody FountainsInAreaDTO fountainsInAreaReqDTO) {
+        return fountainService.getFountainsInArea(
+                fountainsInAreaReqDTO.getMinLat(),
+                fountainsInAreaReqDTO.getMinLon(),
+                fountainsInAreaReqDTO.getMaxLat(),
+                fountainsInAreaReqDTO.getMaxLon());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -60,5 +61,9 @@ public class FountainService {
     public boolean userReviewExistsForFountain(Integer fountainId, String user) {
         Optional<Integer> exists = fountainReviewRepository.getExistingReview(fountainId, user);
         return exists.isPresent();
+    }
+
+    public List<Fountain> getFountainsInArea(float minLat, float minLon, float maxLat, float maxLon) {
+        return fountainRepository.getFountainsInArea(minLat, minLon, maxLat, maxLon);
     }
 }
