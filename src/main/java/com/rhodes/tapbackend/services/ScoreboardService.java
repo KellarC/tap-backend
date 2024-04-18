@@ -46,7 +46,6 @@ public class ScoreboardService {
             ScoreboardDTO existingScoreboard = optionalScoreboard.get();
             existingScoreboard.setPlayerName(newScoreboard.getPlayerName());
             existingScoreboard.setScore(newScoreboard.getScore());
-            // Set other properties as needed
             return scoreboardRepository.save(existingScoreboard);
         } else {
             throw new NotFoundException("Scoreboard with ID " + id + " not found");
