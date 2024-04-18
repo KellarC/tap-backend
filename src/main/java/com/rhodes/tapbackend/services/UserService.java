@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+
     public void changeEmail(String username, String newEmail) {
         ApplicationUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
