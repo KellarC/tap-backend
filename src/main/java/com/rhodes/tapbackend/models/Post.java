@@ -3,7 +3,6 @@ package com.rhodes.tapbackend.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Table(name="posts")
