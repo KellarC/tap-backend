@@ -31,6 +31,15 @@ public class ScoreboardService {
         scoreboardRepository.deleteById(id);
     }
 
+    public List<ScoreboardDTO> getTopScores(int limit) {
+        return scoreboardRepository.findTopScoresOrderByScoreDesc(limit);
+    }
+
+    public ScoreboardDTO getPlayerScore(String playerName) {
+        return scoreboardRepository.findByPlayerName(playerName)
+                .orElse(null);
+    }
+
     public ScoreboardDTO updateScore(Long id, ScoreboardDTO newScoreboard) {
         Optional<ScoreboardDTO> optionalScoreboard = scoreboardRepository.findById(id);
         if (optionalScoreboard.isPresent()) {
