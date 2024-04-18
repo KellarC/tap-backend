@@ -73,4 +73,21 @@ public class UserController {
     public List<String> viewFollowing(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
         return userService.viewFollowing(viewFollowersFollowingDTO.getUsername());
     }
+
+    @PostMapping("/create-post")
+    public Post createPost(@RequestBody CreatePostDTO createPostDTO) {
+        return userService.createPost(createPostDTO.getPoster(),
+                createPostDTO.getMessage(),
+                createPostDTO.getDate());
+    }
+
+    @DeleteMapping("delete-post")
+    public ResponseEntity<?> deletePost(@RequestBody DeletePostDTO deletePostDTO) {
+        boolean deleted = userService.deletePost(deletePostDTO.getPost_id(), deletePostDTO.getRequester());
+        if (deleted) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

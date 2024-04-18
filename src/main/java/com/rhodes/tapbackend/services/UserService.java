@@ -2,7 +2,9 @@ package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.ApplicationUser;
 import com.rhodes.tapbackend.models.Follower;
+import com.rhodes.tapbackend.models.Post;
 import com.rhodes.tapbackend.repositories.FollowerRepository;
+import com.rhodes.tapbackend.repositories.PostRepository;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private FollowerRepository followerRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -107,5 +115,25 @@ public class UserService implements UserDetailsService {
 
     public List<String> viewFollowing(String username) {
         return followerRepository.findFollowing(username);
+    }
+
+    public Post createPost(String poster, String message, LocalDate localDate) {
+        return postRepository.save(new Post(0, poster, message, localDate));
+    }
+
+    public boolean deletePost(Integer post_id, String requester) {
+        //confirm post exists
+        Optional<Post> post= postRepository.findById(post_id);
+        if (post.isEmpty()) {
+            return false;
+        } else {
+            // check if user deleting the post is the one who created it
+            if (!post.get().getPoster().equals(requester)) {
+                return false;
+            } else {
+                postRepository.deleteById(post_id);
+                return true;
+            }
+        }
     }
 }
