@@ -58,12 +58,12 @@ public class FountainController {
         }
     }
 
-    @GetMapping("/get-in-area")
-    public List<Fountain> getFountainsInArea(@RequestBody FountainsInAreaDTO fountainsInAreaReqDTO) {
+    @PostMapping("/get-in-area")
+    public List<Fountain> getFountainsInArea(@RequestBody FountainsInAreaDTO fountainsInAreaDTO) {
         return fountainService.getFountainsInArea(
-                fountainsInAreaReqDTO.getMinLat(),
-                fountainsInAreaReqDTO.getMinLon(),
-                fountainsInAreaReqDTO.getMaxLat(),
-                fountainsInAreaReqDTO.getMaxLon());
+                fountainsInAreaDTO.getMinLat(),
+                fountainsInAreaDTO.getMinLon(),
+                fountainsInAreaDTO.getMaxLat(),
+                fountainsInAreaDTO.getMaxLon());
     }
 }

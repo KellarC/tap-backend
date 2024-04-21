@@ -14,5 +14,5 @@ public interface FountainReviewRepository extends JpaRepository<FountainReview, 
     Integer getFountainReviewCount(@Param("fountainId") Integer fountainId);
 
     @Query(value="SELECT review_id FROM reviews WHERE fountain_id = :fountainId AND reviewer = :user", nativeQuery = true)
-    Optional<Integer> getExistingReview(@Param("fountainId") Integer fountainID, @Param("user") String user);
+    Optional<Integer> getExistingReview(@Param("fountainId") Integer fountainId, @Param("user") String user);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface FountainRepository extends JpaRepository<Fountain, Integer> {
 
-    @Query(value="SELECT * FROM fountains WHERE minLat < :y_coord AND minLon < :x_coord AND maxLat > :y_coord AND maxLon > :x_coord", nativeQuery = true)
+    @Query(value="SELECT * FROM fountains WHERE :minLat < y_coord AND :minLon < x_coord AND :maxLat > y_coord AND :maxLon > x_coord", nativeQuery = true)
     List<Fountain> getFountainsInArea(@Param("minLat") float minLat,
                                       @Param("minLon") float minLon,
                                       @Param("maxLat") float maxLat,
