@@ -64,12 +64,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/view-followers")
+    @PostMapping("/view-followers")
     public List<String> viewFollowers(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
         return userService.viewFollowers(viewFollowersFollowingDTO.getUsername());
     }
 
-    @GetMapping("/view-following")
+    @PostMapping("/view-following")
     public List<String> viewFollowing(@RequestBody ViewFollowersFollowingDTO viewFollowersFollowingDTO) {
         return userService.viewFollowing(viewFollowersFollowingDTO.getUsername());
     }

@@ -58,7 +58,7 @@ public class FountainController {
         }
     }
 
-    @GetMapping("/get-in-area")
+    @PostMapping("/get-in-area")
     public List<Fountain> getFountainsInArea(@RequestBody FountainsInAreaDTO fountainsInAreaDTO) {
         return fountainService.getFountainsInArea(
                 fountainsInAreaDTO.getMinLat(),
