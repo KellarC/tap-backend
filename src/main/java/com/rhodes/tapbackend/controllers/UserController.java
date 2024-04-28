@@ -1,6 +1,7 @@
 package com.rhodes.tapbackend.controllers;
 
 import com.rhodes.tapbackend.models.*;
+import com.rhodes.tapbackend.repositories.LeaderboardRepository;
 import com.rhodes.tapbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -89,5 +90,16 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PostMapping("submit-water")
+    public ResponseEntity<?> submitWater(@RequestBody WaterDTO waterDTO) {
+        userService.submitWater(waterDTO.getUsername(), waterDTO.getOzOfWater());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("view-leaderboard")
+    public List<Leaderboard> viewLeaderboard() {
+        return userService.viewLeaderboard();
     }
 }

@@ -2,8 +2,10 @@ package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.ApplicationUser;
 import com.rhodes.tapbackend.models.Follower;
+import com.rhodes.tapbackend.models.Leaderboard;
 import com.rhodes.tapbackend.models.Post;
 import com.rhodes.tapbackend.repositories.FollowerRepository;
+import com.rhodes.tapbackend.repositories.LeaderboardRepository;
 import com.rhodes.tapbackend.repositories.PostRepository;
 import com.rhodes.tapbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -134,5 +139,22 @@ public class UserService implements UserDetailsService {
                 return true;
             }
         }
+    }
+
+    public void submitWater(String username, float ozOfWater) {
+        //check if user is already in table
+        Optional<Leaderboard> exists = leaderboardRepository.findById(username);
+        if (exists.isEmpty()) {
+            leaderboardRepository.save(new Leaderboard(username, (ozOfWater * 10), ozOfWater));
+        } else {
+            Leaderboard row = exists.get();
+            row.setOzOfWater(row.getOzOfWater() + ozOfWater);
+            row.setPoints(row.getPoints() + (ozOfWater * 10));
+            leaderboardRepository.save(row);
+        }
+    }
+
+    public List<Leaderboard> viewLeaderboard() {
+        return leaderboardRepository.getLeaderboardDescending();
     }
 }
