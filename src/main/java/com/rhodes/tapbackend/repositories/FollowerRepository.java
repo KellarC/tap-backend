@@ -2,6 +2,7 @@ package com.rhodes.tapbackend.repositories;
 
 import com.rhodes.tapbackend.models.Follower;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
@@ -16,4 +17,9 @@ public interface FollowerRepository extends JpaRepository<Follower, Integer> {
 
     @Query(value="SELECT followee FROM followers WHERE follower = :username", nativeQuery = true)
     List<String> findFollowing(@Param("username") String username);
+
+    @Modifying
+    @Query(value="DELETE from followers WHERE follower = :username OR followee = :username", nativeQuery = true)
+    void deleteAllByUsername(@Param("username") String username);
+
 }
