@@ -66,4 +66,9 @@ public class FountainController {
                 fountainsInAreaDTO.getMaxLat(),
                 fountainsInAreaDTO.getMaxLon());
     }
+
+    @PostMapping ("/get-by-user")
+    List<Fountain> getFountainsByUser(@RequestBody FountainsByUserDTO fountainsByUserDTO) {
+        return fountainService.getFountainsByUser(fountainsByUserDTO.getUsername());
+    }
 }

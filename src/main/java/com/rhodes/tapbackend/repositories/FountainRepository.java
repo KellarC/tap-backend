@@ -16,4 +16,6 @@ public interface FountainRepository extends JpaRepository<Fountain, Integer> {
                                       @Param("minLon") float minLon,
                                       @Param("maxLat") float maxLat,
                                       @Param("maxLon") float maxLon);
+    @Query(value="SELECT * FROM fountains WHERE :username = author", nativeQuery = true)
+    List<Fountain> getFountainsByUser(@Param("username") String username);
 }

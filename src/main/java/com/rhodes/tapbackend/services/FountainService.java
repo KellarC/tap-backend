@@ -87,4 +87,8 @@ public class FountainService {
     public List<Fountain> getFountainsInArea(float minLat, float minLon, float maxLat, float maxLon) {
         return fountainRepository.getFountainsInArea(minLat, minLon, maxLat, maxLon);
     }
+
+    public List<Fountain> getFountainsByUser(String username) {
+        return fountainRepository.getFountainsByUser(username);
+    }
 }
