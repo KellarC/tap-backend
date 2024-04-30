@@ -2,8 +2,10 @@ package com.rhodes.tapbackend.services;
 
 import com.rhodes.tapbackend.models.Fountain;
 import com.rhodes.tapbackend.models.FountainReview;
+import com.rhodes.tapbackend.models.Leaderboard;
 import com.rhodes.tapbackend.repositories.FountainRepository;
 import com.rhodes.tapbackend.repositories.FountainReviewRepository;
+import com.rhodes.tapbackend.repositories.LeaderboardRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,19 @@ public class FountainService {
     @Autowired
     private FountainReviewRepository fountainReviewRepository;
 
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
+
     // id and verified attributes set manually for new fountains
     public Fountain addFountain(float xCoord, float yCoord, String description, float rating, String author) {
+        Optional<Leaderboard> exists = leaderboardRepository.findById(author);
+        if (exists.isEmpty()) {
+            leaderboardRepository.save(new Leaderboard(author, 100, 0));
+        } else {
+            Leaderboard row = exists.get();
+            row.setPoints(row.getPoints() + 100);
+            leaderboardRepository.save(row);
+        }
         return fountainRepository.save(new Fountain(0, xCoord, yCoord, description, rating, false, author));
     }
 
@@ -45,6 +58,14 @@ public class FountainService {
     }
 
     public void addFountainReview(Integer fountainId, String reviewer, String description, float rating) {
+        Optional<Leaderboard> exists = leaderboardRepository.findById(reviewer);
+        if (exists.isEmpty()) {
+            leaderboardRepository.save(new Leaderboard(reviewer, 50, 0));
+        } else {
+            Leaderboard row = exists.get();
+            row.setPoints(row.getPoints() + 50);
+            leaderboardRepository.save(row);
+        }
         fountainReviewRepository.save(new FountainReview(0, fountainId, reviewer, description, rating));
     }
 

@@ -16,4 +16,7 @@ public interface FollowerRepository extends JpaRepository<Follower, Integer> {
 
     @Query(value="SELECT followee FROM followers WHERE follower = :username", nativeQuery = true)
     List<String> findFollowing(@Param("username") String username);
+
+    @Query(value="SELECT id from followers WHERE follower = :username OR followee = :username", nativeQuery = true)
+    List<Integer> findAllByUsername(@Param("username") String username);
 }
