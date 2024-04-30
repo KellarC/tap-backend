@@ -35,9 +35,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private LeaderboardRepository leaderboardRepository;
 
-    @Autowired
-    private FountainReviewRepository fountainReviewRepository;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
@@ -71,9 +68,15 @@ public class UserService implements UserDetailsService {
         ApplicationUser user = userRepository.findByUsername(username)
                 .orElse(null); // null = does not exist
         if (user != null) {
-            //postRepository.deleteAllByUsername(user.getUsername());
-            //leaderboardRepository.deleteAllById(Collections.singleton(user.getUsername()));
-            //followerRepository.deleteAllByUsername(user.getUsername());
+            List<Integer> relationshipIds = followerRepository.findAllByUsername(username);
+            for (Integer relationship : relationshipIds) {
+                followerRepository.deleteById(relationship);
+            }
+            List<Integer> postIds = postRepository.findAllByUsername(username);
+            for (Integer postId : postIds) {
+                postRepository.deleteById(postId);
+            }
+            leaderboardRepository.deleteAllById(Collections.singleton(user.getUsername()));
             userRepository.deleteById(user.getUserId());
             return true; // deleted
         } else {
