@@ -91,6 +91,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("view-posts")
+    public List<Post> viewPosts() { return userService.viewPosts(); }
+
     @PostMapping("submit-water")
     public ResponseEntity<?> submitWater(@RequestBody WaterDTO waterDTO) {
         userService.submitWater(waterDTO.getUsername(), waterDTO.getOzOfWater());
@@ -98,7 +101,5 @@ public class UserController {
     }
 
     @GetMapping("view-leaderboard")
-    public List<Leaderboard> viewLeaderboard() {
-        return userService.viewLeaderboard();
-    }
+    public List<Leaderboard> viewLeaderboard() { return userService.viewLeaderboard(); }
 }

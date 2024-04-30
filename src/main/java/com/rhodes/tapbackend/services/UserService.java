@@ -156,6 +156,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public List<Post> viewPosts() { return postRepository.findAll(); }
+
     public void submitWater(String username, float ozOfWater) {
         //check if user is already in table
         Optional<Leaderboard> exists = leaderboardRepository.findById(username);
@@ -169,7 +171,5 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public List<Leaderboard> viewLeaderboard() {
-        return leaderboardRepository.getLeaderboardDescending();
-    }
+    public List<Leaderboard> viewLeaderboard() { return leaderboardRepository.getLeaderboardDescending(); }
 }
