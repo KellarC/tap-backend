@@ -18,15 +18,18 @@ public class Post {
     private String message;
     @Column(name="date")
     private LocalDate date; //yyyy-MM-dd
+    @Column(name="time")
+    private String time; //HH:mm
 
     public Post() {
     }
 
-    public Post(Integer postId, String poster, String message, LocalDate date) {
+    public Post(Integer postId, String poster, String message, LocalDate date, String time) {
         this.postId = postId;
         this.poster = poster;
         this.message = message;
         this.date = date;
+        this.time = time;
     }
 
     public Integer getPostId() {
@@ -60,4 +63,8 @@ public class Post {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
 }

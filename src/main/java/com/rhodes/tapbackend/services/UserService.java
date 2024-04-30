@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +74,7 @@ public class UserService implements UserDetailsService {
             for (Integer relationship : relationshipIds) {
                 followerRepository.deleteById(relationship);
             }
-            List<Integer> postIds = postRepository.findAllByUsername(username);
+            List<Integer> postIds = postRepository.findAllIdsByUsername(username);
             for (Integer postId : postIds) {
                 postRepository.deleteById(postId);
             }
@@ -128,7 +130,7 @@ public class UserService implements UserDetailsService {
         return followerRepository.findFollowing(username);
     }
 
-    public Post createPost(String poster, String message, LocalDate localDate) {
+    public Post createPost(String poster, String message, LocalDate localDate, Integer hour, Integer minute) {
         Optional<Leaderboard> exists = leaderboardRepository.findById(poster);
         if (exists.isEmpty()) {
             leaderboardRepository.save(new Leaderboard(poster, 25, 0));
@@ -137,7 +139,11 @@ public class UserService implements UserDetailsService {
             row.setPoints(row.getPoints() + 25);
             leaderboardRepository.save(row);
         }
-        return postRepository.save(new Post(0, poster, message, localDate));
+        //convert 24-hr time to 12-hr time
+        LocalTime militaryTime = LocalTime.of(hour, minute);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String standardTime = militaryTime.format(formatter);
+        return postRepository.save(new Post(0, poster, message, localDate, standardTime));
     }
 
     public boolean deletePost(Integer post_id, String requester) {
@@ -157,6 +163,8 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Post> viewPosts() { return postRepository.findAll(); }
+
+    public List<Post> viewPostByUser(String username) { return postRepository.findAllPostsByUser(username); }
 
     public void submitWater(String username, float ozOfWater) {
         //check if user is already in table

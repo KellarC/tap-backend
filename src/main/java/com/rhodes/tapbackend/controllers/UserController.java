@@ -78,7 +78,9 @@ public class UserController {
     public Post createPost(@RequestBody CreatePostDTO createPostDTO) {
         return userService.createPost(createPostDTO.getPoster(),
                 createPostDTO.getMessage(),
-                createPostDTO.getDate());
+                createPostDTO.getDate(),
+                createPostDTO.getHour(),
+                createPostDTO.getMinute());
     }
 
     @DeleteMapping("delete-post")
@@ -93,6 +95,11 @@ public class UserController {
 
     @GetMapping("view-posts")
     public List<Post> viewPosts() { return userService.viewPosts(); }
+
+    @PostMapping("view-posts-by-user")
+    public List<Post> viewPostsByUser(@RequestBody PostsByUserDTO postsByUserDTO) {
+        return userService.viewPostByUser(postsByUserDTO.getUsername());
+    }
 
     @PostMapping("submit-water")
     public ResponseEntity<?> submitWater(@RequestBody WaterDTO waterDTO) {
