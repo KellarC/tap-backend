@@ -67,6 +67,11 @@ public class FountainService {
             leaderboardRepository.save(row);
         }
         fountainReviewRepository.save(new FountainReview(0, fountainId, reviewer, description, rating));
+        //check if fountain can be verified
+        if (fountainReviewRepository.getFountainReviewCount(fountainId) == 1) {
+            Optional<Fountain> fountain = fountainRepository.findById(fountainId);
+            fountain.get().setVerified(true);
+        }
     }
 
     public Integer getFountainReviewCount(Integer fountainId) {
