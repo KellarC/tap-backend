@@ -180,4 +180,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Leaderboard> viewLeaderboard() { return leaderboardRepository.getLeaderboardDescending(); }
+
+    public List<String> getUser(String username) { return userRepository.getUserDetailsByUsername(username);
+    }
 }

@@ -109,4 +109,9 @@ public class UserController {
 
     @GetMapping("view-leaderboard")
     public List<Leaderboard> viewLeaderboard() { return userService.viewLeaderboard(); }
+
+    @PostMapping("get-user")
+    public List<String> getUser(@RequestBody GetUserDTO getUserDTO) {
+        return userService.getUser(getUserDTO.getUsername());
+    }
 }

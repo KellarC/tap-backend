@@ -9,7 +9,6 @@ import com.rhodes.tapbackend.repositories.LeaderboardRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.Optional;
 import java.util.List;
@@ -27,7 +26,6 @@ public class FountainService {
     @Autowired
     private LeaderboardRepository leaderboardRepository;
 
-    // id and verified attributes set manually for new fountains
     public Fountain addFountain(float xCoord, float yCoord, String description, float rating, String author) {
         Optional<Leaderboard> exists = leaderboardRepository.findById(author);
         if (exists.isEmpty()) {
@@ -37,6 +35,7 @@ public class FountainService {
             row.setPoints(row.getPoints() + 100);
             leaderboardRepository.save(row);
         }
+        // id and verified attributes set manually for new fountains
         return fountainRepository.save(new Fountain(0, xCoord, yCoord, description, rating, false, author));
     }
 
@@ -68,7 +67,7 @@ public class FountainService {
         }
         fountainReviewRepository.save(new FountainReview(0, fountainId, reviewer, description, rating));
         //check if fountain can be verified
-        if (fountainReviewRepository.getFountainReviewCount(fountainId) == 1) {
+        if (fountainReviewRepository.getFountainReviewCount(fountainId) == 5) {
             Optional<Fountain> fountain = fountainRepository.findById(fountainId);
             fountain.get().setVerified(true);
         }
