@@ -18,7 +18,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ApplicationUser registerUser(@RequestBody RegistrationDTO body) {
-        return authenticationService.registerUser(body.getUsername(),
+        String lowercase_username = body.getUsername().toLowerCase();
+        return authenticationService.registerUser(lowercase_username,
                 body.getPassword(),
                 body.getFirstName(),
                 body.getLastName(),
